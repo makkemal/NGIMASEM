@@ -20,3 +20,8 @@ Units are assumed as follows:
 4. Stress (MPa)
 5. Length (mm)
 6. Time defined by usnc.GetGetTempPosTimeCode and usnc.GetFluencePosTimeCode as they are the only functions that depend on time
+
+
+Run 
+Calibration _Environment_Exp.ipynb
+In Jupyter Notebook

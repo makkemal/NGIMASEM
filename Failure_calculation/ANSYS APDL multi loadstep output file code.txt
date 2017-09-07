@@ -1,0 +1,57 @@
+!   Commands inserted into this file will be executed immediately after the ANSYS /POST1 command.
+
+!   Active UNIT system in Workbench when this object was created:  Metric (m, kg, N, s, V, A)
+!   NOTE:  Any data that requires units (such as mass) is assumed to be in the consistent solver unit system.
+!                See Solving Units in the help system for more information.
+
+
+resume
+allsel
+*get,numb_sets,active,0,set,nset
+*status,numb_sets
+set,first
+
+cmsel,s,,VOLU
+
+! Get max element number and create arrays for data and select status 
+*GET,emax,elem,,num,max 
+*DIM,final,,emax,5		!Array to be saved to file
+*DIM,sele,,emax 		!Array for masking selected elements
+*VGET,sele(1),elem,,esel 	!Vill mask array with 1' and 0's, based on an elements selection status, this will be used for masking selected elements
+
+*do,i_set,1,numb_sets,1
+
+	AVPRIN,0, , 
+	ETABLE,volum,VOLU,  
+	!*  
+	AVPRIN,0, , 
+	ETABLE,S1,S,1   
+	!*  
+	AVPRIN,0, , 
+	ETABLE,S2,S,2   
+	!*  
+	AVPRIN,0, , 
+	ETABLE,S3,S,3   
+	!* 
+	pretab,volum
+	*get,current_time,active,0,set,time 
+	*VFILL,final(1,1),ramp,current_time,0	!Fill 1st column in final arry with the current time step value
+	*VMASK,sele(1)				!Specify that only info selected elements should be placed in final array (uses only elements in Block named selection)
+	*VGET,final(1,2),elem,,etab,volum		!Fill final array with volume and stress values
+	*VGET,final(1,3),elem,,etab,S1
+	*VGET,final(1,4),elem,,etab,S2
+	*VGET,final(1,5),elem,,etab,S3 
+
+		
+	*IF, i_set,eq,1,then
+		*cfopen,transient_multi,csv			!If it is the firt step, create/overwrite output file
+	*ELSE
+		*cfopen,transient_multi,csv,,append 		!If it is not the firt step, append the output file
+	*ENDIF
+	*vwrite, final(1,1),final(1,2),final(1,3),final(1,4),final(1,5)
+	%14.3f,%20.12f,%14.3f,%14.3f,%14.3f
+	*cfclos
+	
+	set,next
+*enddo
+

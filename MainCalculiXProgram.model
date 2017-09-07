@@ -1,0 +1,263 @@
+!
+!     CalculiX - A 3-dimensional finite element program
+!              Copyright (C) 1998-2015 Guido Dhondt
+!
+!     This program is free software; you can redistribute it and/or
+!     modify it under the terms of the GNU General Public License as
+!     published by the Free Software Foundation(version 2);
+!     
+!
+!     This program is distributed in the hope that it will be useful,
+!     but WITHOUT ANY WARRANTY; without even the implied warranty of 
+!     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+!     GNU General Public License for more details.
+!
+!     You should have received a copy of the GNU General Public License
+!     along with this program; if not, write to the Free Software
+!     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+!
+      subroutine umat(stress,statev,ddsdde,sse,spd,scd,
+     &  rpl,ddsddt,drplde,drpldt,
+     &  stran,dstran,time,dtime,temp,dtemp,predef,dpred,cmname,
+     &  ndi,nshr,ntens,nstatv,props,nprops,coords,drot,pnewdt,
+     &  celent,dfgrd0,dfgrd1,noel,npt,layer,kspt,kstep,kinc)
+!
+      implicit none
+!
+      character*80 cmname
+!
+      integer ndi,nshr,ntens,nstatv,nprops,noel,npt,layer,kspt,
+     &  kstep,kinc
+!
+      real*8 stress(ntens),statev(nstatv),
+     &  ddsdde(ntens,ntens),ddsddt(ntens),drplde(ntens),
+     &  stran(ntens),dstran(ntens),time(2),celent,
+     &  props(nprops),coords(3),drot(3,3),dfgrd0(3,3),dfgrd1(3,3),
+     &  sse,spd,scd,rpl,drpldt,dtime,temp,dtemp,predef,dpred,
+     &  pnewdt
+!
+!     IRRADIATED GRAPHITE MATERIAL
+!
+      integer i,j
+      real*8 T_t2,T_t1,F_t2,F_t1,Eth(6),Ew(6)
+      real*8 Eel(6),dEeldS(6,6),dEcpdS(6,6)
+      real*8 dEcsdS(6,6),stress_t1(6),stress_t2(6),Ecp_t1(6),Ecp_t2(6)
+      real*8 Ecs_t1(6),Ecs_t2(6),nrmRes,idRdS(6,6),Res(6),dResdS(6,6)
+!
+      call GetTempPosTime(T_t2,Coords,time(2)+dtime)
+      call GetTempPosTime(T_t1,Coords,time(2))
+      call GetFluencePosTime(F_t2,Coords,time(2)+dtime)
+      call GetFluencePosTime(F_t1,Coords,time(2))
+      call Get_Eth(T_t2,F_t2,Eth)
+      call Get_Ew(T_t2,F_t2,Ew)
+
+      Ecp_t1    = statev(1:6)
+      Ecs_t1    = statev(7:12)
+      stress_t1 = stress
+      
+      if (time(2).lt.dtime) then
+          Ecp_t1 = 0.d0
+          Ecs_t1 = 0.d0
+      endif
+
+      nrmRes = 1.d0
+      stress_t2 = stress_t1
+      do while(nrmRes.gt.1.d-12)
+      
+         call WarningCode(T_t2,F_t2)
+         call WarningCode(T_t1,F_t1)
+ 
+         call Get_Eel(T_t2,F_t2,stress_t2,Eel,dEeldS)
+         call Get_Ecp(T_t1,F_t1,stress_t1,T_t2,F_t2,stress_t2,
+     .             Ecp_t1,Ecp_t2,dEcpdS)
+         call Get_Ecs(T_t1,F_t1,stress_t1,T_t2,F_t2,stress_t2,
+     .             Ecs_t1,Ecs_t2,dEcsdS)
+
+         Res = stran + dstran - props(1)*Eel - props(4)*Ew - 
+     .   props(5)*Eth - props(3)*Ecs_t2 - props(2)*Ecp_t2
+        
+         nrmRes = 0.d0
+         do i=1,6
+            nrmRes = nrmRes + Res(i)**2
+         enddo
+         nrmRes = dsqrt(nrmRes)
+         dResdS = props(1)*dEeldS + props(2)*dEcpdS + props(3)*dEcsdS
+         call INV_D(dResdS, idRdS)
+
+         do i=1,6
+            do j=1,6
+               stress_t2(i) = stress_t2(i) + idRdS(i,j)*Res(j)
+            enddo
+         enddo
+      enddo
+
+      ddsdde = idRdS
+      stress = stress_t2
+      statev(1:6)  = Ecp_t2
+      statev(7:12) = Ecs_t2
+
+      return
+      end
+
+!*******************************************************************
+      subroutine Get_Ecp(T_t1,F_t1,stress_t1,T_t2,F_t2,stress_t2,
+     .             Ecp_t1,Ecp_t2,dEcpdS)
+!*******************************************************************
+! This subroutine computes the primary creep at the end of the time step
+! Input :  T_t1      : Temperature at start of the time step
+!          T_t2      : Temperature at end of the time step
+!          F_t1      : Fluence at start of the time step
+!          F_t2      : Fluence at end of the time step
+!          stress_t1 : Stress at start of the time step
+!          stress_t2 : Stress at end of the time step
+!          Ecp_t1    : Primary creep at start of the time step
+! Output : Ecp_t2    : Primary creep at end of the stime step
+!          dEcpdS    : Derivative of primary creep at end of time step 
+!                      wrt stress at end of the time step
+      implicit none
+      integer i,j,counter
+      real*8 T_t1,T_t2,F_t1,F_t2,stress_t1(6),stress_t2(6)
+      real*8 Ecp_t1(6),Ecp_t2(6),dEcpdS(6,6)
+      real*8 dF,nrmRes,Res(6),nrmRes0
+      real*8 dEcp_rate_dS_t1(6,6),dEcp_rate_dS_t2(6,6)
+      real*8 dEcp_rate_dE_t1,dEcp_rate_dE_t2,dResdEcp
+      real*8 Ecp_rate_t1(6),Ecp_rate_t2(6)
+
+      call GetEcp_rate(T_t1,F_t1,stress_t1,Ecp_t1,Ecp_rate_t1,
+     .                 dEcp_rate_dS_t1,dEcp_rate_dE_t1)
+      dF = F_t2 - F_t1
+! Initial guess for primary creep at end of increment
+      Ecp_t2 = Ecp_t1
+      call GetEcp_rate(T_t2,F_t2,stress_t2,Ecp_t2,Ecp_rate_t2,
+     .                    dEcp_rate_dS_t2,dEcp_rate_dE_t2)
+      Res = Ecp_t2 - Ecp_t1 - 0.5d0*dF*(Ecp_rate_t1 + Ecp_rate_t2)
+      nrmRes0 = 0.d0
+      do i=1,6
+          nrmRes0 = nrmRes0 + Res(i)**2
+      enddo
+      nrmRes0 = dsqrt(nrmRes0)
+      counter = 0
+      nrmRes = 1.d0
+      do while((nrmRes.gt.1.d-10*nrmRes0).and.(counter.lt.20).and.
+     .   (nrmRes.gt.1d-12))
+         call GetEcp_rate(T_t2,F_t2,stress_t2,Ecp_t2,Ecp_rate_t2,
+     .                    dEcp_rate_dS_t2,dEcp_rate_dE_t2)
+         Res = Ecp_t2 - Ecp_t1 - 0.5d0*dF*(Ecp_rate_t1 + Ecp_rate_t2)
+         nrmRes = 0.d0
+         do i=1,6
+            nrmRes = nrmRes + Res(i)**2
+         enddo
+         nrmRes = dsqrt(nrmRes)
+         dResdEcp = 1.d0 - 0.5d0*dF*dEcp_rate_dE_t2
+         do i=1,6
+            Ecp_t2(i) = Ecp_t2(i) - Res(i)/dResdEcp
+         enddo
+         counter = counter + 1
+      enddo
+      dEcpdS = 0.5d0*dF*dEcp_rate_dS_t2/dResdEcp
+
+      return
+      end
+!***********************************************************************
+      subroutine Get_Ecs(T_t1,F_t1,stress_t1,T_t2,F_t2,stress_t2,
+     .             Ecs_t1,Ecs_t2,dEcsdS)
+!***********************************************************************
+! This subroutine computes the secondary creep at the end of the time step
+! Input :  T_t1      : temperature at start of the time step
+!          T_t2      : temperature at end of the time step
+!          F_t1      : fluence at start of the time step
+!          F_t2      : fluence at end of the time step
+!          stress_t1 : stress at start of the time step
+!          stress_t2 : stress at end of the time step
+!          Ecs_t1    : secondary creep at start of the time step
+! Output : Ecs_t2    : secondary creep at end of the stime step
+!          dEcsdS    : derivative of secondary creep at end of time step 
+!                      wrt stress at end of the time step
+      implicit none
+      integer i,j
+      real*8 T_t1,T_t2,F_t1,F_t2,stress_t1(6),stress_t2(6)
+      real*8 Ecs_t1(6),Ecs_t2(6),dEcsdS(6,6),dF
+      real*8 Ecs_rate_t1(6),Ecs_rate_t2(6),dEdS_t1(6,6),dEdS_t2(6,6)
+
+      dF = F_t2 - F_t1
+      call GetEcs_rate(T_t1,F_t1,stress_t1,Ecs_rate_t1,dEdS_t1)
+      call GetEcs_rate(T_t2,F_t2,stress_t2,Ecs_rate_t2,dEdS_t2)
+      Ecs_t2 = Ecs_t1 + 0.5d0*dF*(Ecs_rate_t1 + Ecs_rate_t2)
+      dEcsdS = 0.5d0*dF*dEdS_t2
+      return
+      end
+
+!************************************************************************
+      subroutine Get_Eel(T,F,stress,Eel,dEeldS)
+!************************************************************************
+! This subroutine computes the elastic strain at the end of the time step
+! Input  : T      : Temperature at end of the time step
+!          F      : Fluence at the end of the time step
+!          stress : Stress at the end of the time step
+! Output : Eel    : Elastic strain at the end of the time step
+!          dEeldS : Derivative of the elastic strain at the end of the 
+!                   time step wrt the stress at the end of the time step
+      implicit none
+      real*8 T,F,stress(6),Eel(6),dEeldS(6,6)
+      integer i,j
+      call Get_invDel(T,F,dEeldS)
+      Eel = 0.d0
+      do i=1,6
+         do j=1,6
+            Eel(i) = Eel(i) + dEeldS(i,j)*stress(j)
+         enddo
+      enddo
+      return
+      end
+
+!******************************************************************
+      subroutine INV_D(A, AINV)
+!******************************************************************
+!  INV_D  -  Compute the inverse of a 6x6 compliance matrix.
+!
+!  A       = input 6x6 compliance matrix to be inverted
+!  AINV    = output 6x6 inverse of compliance matrix A
+!******************************************************************
+      IMPLICIT NONE
+
+      real*8, DIMENSION(6,6) :: A
+      real*8, DIMENSION(6,6), INTENT(OUT) :: AINV
+      real*8, DIMENSION(3,3) :: A1,A1INV,COFACTOR
+      real*8 :: DET
+      integer :: i,j
+
+      do i=1,3
+         do j=1,3
+            A1(i,j) = A(i,j)
+         enddo
+      enddo
+
+      DET =   A1(1,1)*A1(2,2)*A1(3,3) - A1(1,1)*A1(2,3)*A1(3,2)  
+     &      - A1(1,2)*A1(2,1)*A1(3,3) + A1(1,2)*A1(2,3)*A1(3,1) 
+     &      + A1(1,3)*A1(2,1)*A1(3,2) - A1(1,3)*A1(2,2)*A1(3,1)
+
+      COFACTOR(1,1) = +(A1(2,2)*A1(3,3)-A1(2,3)*A1(3,2))
+      COFACTOR(1,2) = -(A1(2,1)*A1(3,3)-A1(2,3)*A1(3,1))
+      COFACTOR(1,3) = +(A1(2,1)*A1(3,2)-A1(2,2)*A1(3,1))
+      COFACTOR(2,1) = -(A1(1,2)*A1(3,3)-A1(1,3)*A1(3,2))
+      COFACTOR(2,2) = +(A1(1,1)*A1(3,3)-A1(1,3)*A1(3,1))
+      COFACTOR(2,3) = -(A1(1,1)*A1(3,2)-A1(1,2)*A1(3,1))
+      COFACTOR(3,1) = +(A1(1,2)*A1(2,3)-A1(1,3)*A1(2,2))
+      COFACTOR(3,2) = -(A1(1,1)*A1(2,3)-A1(1,3)*A1(2,1))
+      COFACTOR(3,3) = +(A1(1,1)*A1(2,2)-A1(1,2)*A1(2,1))
+
+      A1INV = TRANSPOSE(COFACTOR) / DET
+
+      AINV = 0.d0
+      do i=1,3
+         do j=1,3
+            AINV(i,j) = A1INV(i,j)
+         enddo
+      enddo
+      AINV(4,4) = 1.d0/A(4,4)
+      AINV(5,5) = 1.d0/A(5,5)
+      AINV(6,6) = 1.d0/A(6,6)
+
+      RETURN
+      END
+
