@@ -53,7 +53,6 @@ Evolumes
 *AMPLITUDE,NAME=A1
 0.,1.0,1.0,1.0,
 
-
 ***********************************************************
 ** Fixed Constraints
 ** written by write_constraints_fixed function
@@ -62,6 +61,20 @@ Evolumes
 FemConstraintFixed,1
 FemConstraintFixed,2
 FemConstraintFixed,3
+
+
+***********************************************************
+** Displacement constraint applied
+** written by write_constraints_displacement function
+** FemConstraintDisplacement
+*BOUNDARY
+FemConstraintDisplacement,2
+** FemConstraintDisplacement001
+*BOUNDARY
+FemConstraintDisplacement001,3
+** FemConstraintDisplacement002
+*BOUNDARY
+FemConstraintDisplacement002,2
 
 
 ***********************************************************
@@ -93,7 +106,7 @@ S, EVOL
 ** CalculiX Input file
 ** written by write_footer function
 **   written by    --> FreeCAD 0.17.12140 (Git)
-**   written on    --> Tue Sep 19 17:15:10 2017
+**   written on    --> Tue Sep 19 22:00:38 2017
 **   file name     --> Demo_fea.fcstd
 **   analysis name --> Analysis
 **
