@@ -753,10 +753,6 @@ dynacont.c \
 dynboun.c \
 electromagnetics.c \
 elemChecker.c \
-exo.c \
-exoselect.c \
-exosetfind.c \
-exovector.c \
 expand.c \
 external.c \
 filtermain.c \
@@ -828,7 +824,6 @@ strcmp1.c \
 strcmp2.c \
 strcpy1.c \
 strsplt.c \
-suitesparse.c \
 tau.c \
 tiedcontact.c \
 u_calloc.c \
@@ -840,8 +835,3 @@ v_result.c \
 writeheading.c
 
 SCCXCXX = umat_dl.cpp
-
-SCCXCU = \
-cudacusp.cu \
-cudacusp.thrustassembly.cu
-

@@ -20,9 +20,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "CalculiX.h"
-#ifdef EXODUSII
-#include "exo.h"
-#endif
 
 #define min(a,b) ((a) <= (b) ? (a) : (b))
 #define max(a,b) ((a) >= (b) ? (a) : (b))
@@ -89,20 +86,6 @@ void frd(double *co,ITG *nk,ITG *kon,ITG *ipkon,char *lakon,ITG *ne0,
   float ifl;
 
   double pi,oner;
-
-#ifdef EXODUSII
-  if(strcmp1(output,"exo")==0){
-    exo(co,nk,kon,ipkon,lakon,ne0,v,stn,inum,nmethod,kode,
-	filab,een,t1,fn,time,epn,ielmat,matname,enern,
-	xstaten,nstate_,istep,iinc,ithermal,qfn,mode,noddiam,
-	trab,inotr,ntrans,orab,ielorien,norien,description,
-	ipneigh,neigh,mi,stx,vr,vi,stnr,stni,vmax,stnmax,
-	ngraph,veold,ener,ne,cs,set,nset,istartset,iendset,
-	ialset,eenmax,fnr,fni,emn,thicke,jobnamec,output,qfx,
-	cdn,mortar,cdnr,cdni,nmat);
-    return;
-  }
-#endif
 
   strcpy(fneig,jobnamec);
   strcat(fneig,".frd");
@@ -205,7 +188,7 @@ void frd(double *co,ITG *nk,ITG *kon,ITG *ipkon,char *lakon,ITG *ne0,
     fprintf(f1,"%5sUHOST                                                              \n",p1);
     fprintf(f1,"%5sUPGM               CalculiX                                        \n",p1);
     fprintf(f1,"%5sUVERSION           Version 2.12                             \n",p1);
-    fprintf(f1,"%5sUCOMPILETIME       Thu Jun  8 11:55:30 DST 2017                    \n",p1);
+    fprintf(f1,"%5sUCOMPILETIME       Tue Sep 19 09:04:33 DST 2017                    \n",p1);
     fprintf(f1,"%5sUDIR                                                               \n",p1);
     fprintf(f1,"%5sUDBN                                                               \n",p1);
     

@@ -11,7 +11,7 @@ FC=gfortran
 
 include Makefile.inc
 
-SCCXMAIN = ccx_2.12.c
+SCCXMAIN = ccx_2.11.c
 
 OCCXF = $(SCCXF:.f=.o)
 OCCXC = $(SCCXC:.c=.o)
@@ -19,13 +19,13 @@ OCCXMAIN = $(SCCXMAIN:.c=.o)
 
 LIBS = -lspooles -larpack -lpthread -lm -lc -lblas
 
-ccx_2.12: $(OCCXMAIN) ccx_2.12.a 
-	./date.pl; $(CC) $(CFLAGS) -c ccx_2.12.c; $(FC) -fopenmp -Wall -O3 -o $@ $(OCCXMAIN) ccx_2.12.a $(LIBS)
+ccx_2.11: $(OCCXMAIN) ccx_2.11.a 
+	./date.pl; $(CC) $(CFLAGS) -c ccx_2.11.c; $(FC) -fopenmp -Wall -O3 -o $@ $(OCCXMAIN) ccx_2.11.a $(LIBS)
 
-ccx_2.12.a: $(OCCXF) $(OCCXC)
+ccx_2.11.a: $(OCCXF) $(OCCXC)
 	ar vr $@ $?
 
 .PHONY: clean
 
 clean:
-	rm -f ccx_2.12 *.o *.a
+	rm -f ccx_2.11 *.o *.a
