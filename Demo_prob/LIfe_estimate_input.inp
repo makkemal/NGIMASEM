@@ -1,0 +1,107 @@
+
+
+
+***********************************************************
+**Nodes and Elements
+** written by femmesh.writeABAQUS
+*INCLUDE,INPUT=FEMMeshGMSH_Node_Elem_sets.inp 
+
+***********************************************************
+** Element sets for materials and FEM element type (solid, shell, beam, fluid)
+** written by write_element_sets_material_and_femelement_type function
+*ELSET,ELSET=SolidMaterialSolid
+Evolumes
+
+***********************************************************
+**Node sets for constraints
+** written by write_node_sets_constraints_fixed
+** written by write_node_sets_constraints_displacement
+** written by write_node_sets_constraints_planerotation
+*INCLUDE,INPUT=FEMMeshGMSH_Node_sets.inp 
+
+***********************************************************
+** Surfaces for contact constraint
+** written by write_surfaces_contraints_contact
+
+***********************************************************
+** Node sets for transform constraint
+** written by write_node_sets_constraints_transform
+
+***********************************************************
+** Materials
+** written by write_materials function
+** Young's modulus unit is MPa = N/mm2
+** FreeCAD material name: None
+** Graphite
+** SolidMaterial
+*INITIAL CONDITIONS,TYPE=SOLUTION,USER
+*MATERIAL,NAME=ABAQUSATR2E
+*USER MATERIAL,CONSTANTS=5
+1.,1.,1.,1.,1.
+*DEPVAR
+12
+*SOLID SECTION,ELSET=Eall,MATERIAL=ABAQUSATR2E
+**
+
+
+***********************************************************
+** At least one step is needed to run an CalculiX analysis of FreeCAD
+** written by write_step_begin function
+*STEP,INC=200
+*STATIC,DIRECT
+1.0,10.0
+*AMPLITUDE,NAME=A1
+0.,1.0,1.0,1.0,
+
+
+***********************************************************
+** Fixed Constraints
+** written by write_constraints_fixed function
+** FemConstraintFixed
+*BOUNDARY
+FemConstraintFixed,1
+FemConstraintFixed,2
+FemConstraintFixed,3
+
+
+***********************************************************
+** Node loads
+** written by write_constraints_force
+
+***********************************************************
+** Element + CalculiX face + load in [MPa]
+** written by write_constraints_pressure
+
+***********************************************************
+** Outputs --> frd file
+** written by write_outputs_types function
+*NODE FILE
+U
+*EL FILE
+S, E
+** outputs --> dat file
+*NODE PRINT , NSET=Nall
+U 
+*EL PRINT , ELSET=Eall
+S, EVOL 
+
+***********************************************************
+** written by write_step_end function
+*END STEP 
+
+***********************************************************
+** CalculiX Input file
+** written by write_footer function
+**   written by    --> FreeCAD 0.17.12140 (Git)
+**   written on    --> Tue Sep 19 17:15:10 2017
+**   file name     --> Demo_fea.fcstd
+**   analysis name --> Analysis
+**
+**
+**
+**   Units
+**
+**   Geometry (mesh data)        --> mm
+**   Materials (Young's modulus) --> N/mm2 = MPa
+**   Loads (nodal loads)         --> N
+**
