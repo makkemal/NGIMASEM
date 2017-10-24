@@ -43,6 +43,7 @@
       real*8 Eel(6),dEeldS(6,6),dEcpdS(6,6)
       real*8 dEcsdS(6,6),stress_t1(6),stress_t2(6),Ecp_t1(6),Ecp_t2(6)
       real*8 Ecs_t1(6),Ecs_t2(6),nrmRes,idRdS(6,6),Res(6),dResdS(6,6)
+
 !
       call GetTempPosTime(T_t2,Coords,time(2)+dtime)
       call GetTempPosTime(T_t1,Coords,time(2))
@@ -50,7 +51,7 @@
       call GetFluencePosTime(F_t1,Coords,time(2))
       call Get_Eth(T_t2,F_t2,Eth)
       call Get_Ew(T_t2,F_t2,Ew)
-
+	  
       Ecp_t1    = statev(1:6)
       Ecs_t1    = statev(7:12)
       stress_t1 = stress

@@ -364,9 +364,9 @@
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 10**(F*(-2.02919485524931d0*F**3*T - 3.69067296269081d0*F
-     @ **3 + 8.05630627594521d0*F**2 - 1.18383580569256d0*F*T**2 -
-     @ 7.24272115019942d0*F + 0.267682741256171d0*T + 3.27822378551637d0
+      Answer = 10**(F*(-2.02919500156835d0*F**3*T - 3.69067427821189d0*F
+     @ **3 + 8.05630863443232d0*F**2 - 1.18383567638067d0*F*T**2 -
+     @ 7.24272241643419d0*F + 0.26768271083925d0*T + 3.27822398853396d0
      @ ))
       return
       end
@@ -389,9 +389,9 @@
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 10**(F*(-1.11508717462275d0*F**3*T - 4.08620889040924d0*F
-     @ **3 + 8.94323620793999d0*F**2 - 1.24008634535327d0*F*T**2 -
-     @ 7.97562691470214d0*F + 0.042604583021196d0*T + 3.46166689637576d0
+      Answer = 10**(F*(-1.11508707053732d0*F**3*T - 4.08620884928165d0*F
+     @ **3 + 8.9432361189593d0*F**2 - 1.24008647353985d0*F*T**2 -
+     @ 7.97562684811928d0*F + 0.042604617722829d0*T + 3.46166687585701d0
      @ ))
       return
       end
@@ -414,10 +414,10 @@
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 0.0153530586150534d0*F**3 + 0.349578699411909d0*F**2*T +
-     @ 0.119388458183265d0*F**2 + 0.00599094066827001d0*F*T**2 -
-     @ 0.15341128308311d0*F*T - 0.145297824185457d0*F +
-     @ 0.0117869473680535d0*T + 0.00318409227515302d0
+      Answer = 0.0153530606937785d0*F**3 + 0.349578701076742d0*F**2*T +
+     @ 0.119388454793493d0*F**2 + 0.00599094058166944d0*F*T**2 -
+     @ 0.153411284287507d0*F*T - 0.145297822614822d0*F +
+     @ 0.0117869475771738d0*T + 0.0031840920729342d0
       return
       end
       subroutine Get_Wigner_per(To,Fo,Answer)
@@ -439,10 +439,10 @@
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 0.0456699243614627d0*F**3 + 0.513365732094782d0*F**2*T +
-     @ 0.0651624030879375d0*F**2 + 0.0208700214442222d0*F*T**2 -
-     @ 0.253310247001052d0*F*T - 0.0804745844722801d0*F +
-     @ 0.0200651799638447d0*T - 0.00129205939267519d0
+      Answer = 0.0456699255847065d0*F**3 + 0.513365731196991d0*F**2*T +
+     @ 0.0651624013216737d0*F**2 + 0.0208700208980301d0*F*T**2 -
+     @ 0.253310245997347d0*F*T - 0.0804745837516608d0*F +
+     @ 0.0200651799685113d0*T - 0.00129205950695946d0
       return
       end
       subroutine Get_CTEoCTE0par(To,Fo,Answer)
@@ -464,10 +464,10 @@
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 1.99112848567294d0*F**3 + 1.52818622895704d0*F**2*T -
-     @ 2.22925020532312d0*F**2 + 0.547100861242998d0*F*T**2 -
-     @ 1.4626664542219d0*F*T - 0.454532925706461d0*F -
-     @ 0.115293825988803d0*T + 0.417211034581856d0
+      Answer = 1.99112856742415d0*F**3 + 1.528186503765d0*F**2*T -
+     @ 2.22925046424332d0*F**2 + 0.547100929819404d0*F*T**2 -
+     @ 1.46266679171846d0*F*T - 0.454532719877345d0*F -
+     @ 0.115293773673909d0*T + 0.417210998338686d0
       return
       end
       subroutine Get_CTEoCTE0per(To,Fo,Answer)
@@ -489,10 +489,10 @@
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 2.20933719030931d0*F**3 + 2.20370263505754d0*F**2*T -
-     @ 3.22094006243176d0*F**2 + 0.413079561933016d0*F*T**2 -
-     @ 2.06932307903771d0*F*T + 0.324400701995973d0*F -
-     @ 0.0150027392087665d0*T + 0.335393164279918d0
+      Answer = 2.20933750437817d0*F**3 + 2.20370288846218d0*F**2*T -
+     @ 3.22094067037743d0*F**2 + 0.413079582890191d0*F*T**2 -
+     @ 2.06932334688347d0*F*T + 0.324401043293137d0*F -
+     @ 0.0150026898566258d0*T + 0.335393113587849d0
       return
       end
       subroutine Get_CTE0par(To,Answer)
@@ -531,8 +531,8 @@
 
       T = (To-Tmin)/(Tmax-Tmin)
 
-      Answer = 10**(-0.0138211653718181d0*T**2 + 0.0469701719735655d0*T
-     @ - 5.32664359354929d0)
+      Answer = 10**(-0.0138211647738727d0*T**2 + 0.0469701716881542d0*T
+     @ - 5.32664359362176d0)
       return
       end
       subroutine Get_invDel(T,F,iDel)
@@ -660,17 +660,19 @@
 ! Output : Warning Message Printed to the Screen 
       implicit none
       real*8 T,F
-!     if (T.lt.300.000000000000d0) then 
-!          write(*,*) '*WARNING EXTRAPOLOTION* T BELOW Calibration Data'
-!      endif
-!      if (T.gt.550.000000000000d0) then 
-!          write(*,*) '*WARNING EXTRAPOLOTION* T ABOVE Calibration Data'
-!      endif
-!      if (F.lt.300.000000000000d0) then 
-!          write(*,*) '*WARNING EXTRAPOLOTION* F BELOW Calibration Data'
-!      endif
-!      if (F.gt.27.9700000000000d0) then 
-!          write(*,*) '*WARNING EXTRAPOLOTION* F ABOVE Calibration Data'
-!      endif
+     if (T.lt.300.000000000000d0) then 
+          write(*,*) '*WARNING EXTRAPOLOTION* T BELOW Calibration Data'
+      endif
+      if (T.gt.550.000000000000d0) then 
+          write(*,*) '*WARNING EXTRAPOLOTION* T ABOVE Calibration Data'
+      endif
+      if (F.lt.300.000000000000d0) then 
+          write(*,*) '*WARNING EXTRAPOLOTION* F BELOW Calibration Data'
+      endif
+      if (F.gt.27.9700000000000d0) then 
+          write(*,*) '*WARNING EXTRAPOLOTION* F ABOVE Calibration Data'
+      endif
+	   WRITE(*,*)  'Temperature=', T
+	   WRITE(*,*)  'Fluence=', F
       return
       end
