@@ -3,6 +3,8 @@ import pandas as pd
 from scipy.optimize import least_squares
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from sympy import *
 from numpy import array
 from sympy import log
@@ -390,22 +392,22 @@ def GetWarningCode(Tlow,Thigh,Flow,Fhigh):
 '! Output : Warning Message Printed to the Screen \n'+
 '      implicit none\n'+
 '      real*8 T,F\n'+
-'      if (T.lt.{}) then \n'.format(fcode(Tlow).strip())+
-"          write(*,*) '*WARNING EXTRAPOLOTION* T BELOW Calibration Data'\n"+
-"          write(*,*)  'Temperature=', T\n"+
-'      endif\n'+
-'      if (T.gt.{}) then \n'.format(fcode(Thigh).strip())+
-"          write(*,*) '*WARNING EXTRAPOLOTION* T ABOVE Calibration Data'\n"+
-"          write(*,*)  'Temperature=', T\n"+
-'      endif\n'+
-'      if (F.lt.{}) then \n'.format(fcode(Flow).strip())+
-"          write(*,*) '*WARNING EXTRAPOLOTION* F BELOW Calibration Data'\n"+
-"	       write(*,*)  'Fluence=', F\n"+
-'      endif\n'+
-'      if (F.gt.{}) then \n'.format(fcode(Fhigh).strip())+
-"          write(*,*) '*WARNING EXTRAPOLOTION* F ABOVE Calibration Data'\n"+
-"	       write(*,*)  'Fluence=', F\n"+
-'      endif\n'+
+'!      if (T.lt.{}) then \n'.format(fcode(Tlow).strip())+
+"!          write(*,*) '*WARNING EXTRAPOLOTION* T BELOW Calibration Data'\n"+
+"!          write(*,*)  'Temperature=', T\n"+
+'!      endif\n'+
+'!      if (T.gt.{}) then \n'.format(fcode(Thigh).strip())+
+"!          write(*,*) '*WARNING EXTRAPOLOTION* T ABOVE Calibration Data'\n"+
+"!          write(*,*)  'Temperature=', T\n"+
+'!      endif\n'+
+'!      if (F.lt.{}) then \n'.format(fcode(Flow).strip())+
+"!          write(*,*) '*WARNING EXTRAPOLOTION* F BELOW Calibration Data'\n"+
+"!	       write(*,*)  'Fluence=', F\n"+
+'!      endif\n'+
+'!      if (F.gt.{}) then \n'.format(fcode(Fhigh).strip())+
+"!          write(*,*) '*WARNING EXTRAPOLOTION* F ABOVE Calibration Data'\n"+
+"!	       write(*,*)  'Fluence=', F\n"+
+'!      endif\n'+
 '      return\n'+
 '      end\n')
    
