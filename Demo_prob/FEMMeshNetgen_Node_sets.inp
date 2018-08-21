@@ -1,0 +1,45 @@
+
+***********************************************************
+** Node sets for fixed constraint
+** written by write_node_sets_constraints_fixed function
+** FemConstraintFixed
+*NSET,NSET=FemConstraintFixed
+4,
+
+***********************************************************
+** Node sets for prescribed displacement constraint
+** written by write_node_sets_constraints_displacement function
+** FemConstraintDisplacement
+*NSET,NSET=FemConstraintDisplacement
+3,
+4,
+38,
+7,
+8,
+10,
+39,
+12,
+17,
+18,
+40,
+23,
+24,
+27,
+28,
+** FemConstraintDisplacement001
+*NSET,NSET=FemConstraintDisplacement001
+2,
+4,
+6,
+8,
+9,
+10,
+13,
+14,
+15,
+16,
+17,
+18,
+29,
+30,
+31,

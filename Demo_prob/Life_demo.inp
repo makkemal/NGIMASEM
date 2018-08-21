@@ -49,9 +49,10 @@ Evolumes
 ** written by write_step_begin function
 *STEP,INC=200
 *STATIC,DIRECT
-1.0,10.0
+1.0,30.0
 *AMPLITUDE,NAME=A1
-0.,1.0,1.0,1.0,
+1.0,1.0,1.0,1.0,1.0
+
 
 ***********************************************************
 ** Fixed Constraints
@@ -72,9 +73,6 @@ FemConstraintDisplacement,2
 ** FemConstraintDisplacement001
 *BOUNDARY
 FemConstraintDisplacement001,3
-** FemConstraintDisplacement002
-*BOUNDARY
-FemConstraintDisplacement002,2
 
 
 ***********************************************************
@@ -88,16 +86,11 @@ FemConstraintDisplacement002,2
 ***********************************************************
 ** Outputs --> frd file
 ** written by write_outputs_types function
-*NODE FILE
-U
-*EL FILE
-S, E
 ** outputs --> dat file
 *NODE PRINT , NSET=Nall
 U 
 *EL PRINT , ELSET=Eall
-S, EVOL 
-
+S ,EVOL, SDV
 ***********************************************************
 ** written by write_step_end function
 *END STEP 
@@ -105,8 +98,8 @@ S, EVOL
 ***********************************************************
 ** CalculiX Input file
 ** written by write_footer function
-**   written by    --> FreeCAD 0.17.12140 (Git)
-**   written on    --> Tue Sep 19 22:00:38 2017
+**   written by    --> FreeCAD 0.18.13983 (Git)
+**   written on    --> Tue Jun 26 14:00:02 2018
 **   file name     --> Demo_fea.fcstd
 **   analysis name --> Analysis
 **

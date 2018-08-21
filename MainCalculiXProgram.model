@@ -96,7 +96,10 @@
       stress = stress_t2
       statev(1:6)  = Ecp_t2
       statev(7:12) = Ecs_t2
-
+	  
+	  statev(13) = T_t1
+	  statev(14) = F_t1
+	  
       return
       end
 

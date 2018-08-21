@@ -770,10 +770,10 @@ c
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 1.99112856742415d0*F**3 + 1.528186503765d0*F**2*T -
-     @ 2.22925046424332d0*F**2 + 0.547100929819404d0*F*T**2 -
-     @ 1.46266679171846d0*F*T - 0.454532719877345d0*F -
-     @ 0.115293773673909d0*T + 0.417210998338686d0
+      Answer = F*(-12.3629918266927d0*F**3 - 1.81306719440064d0*F**2*T +
+     @ 28.2704331281667d0*F**2 + 0.990752925306645d0*F*T**2 +
+     @ 2.87895958403812d0*F*T - 20.7106454165527d0*F -
+     @ 1.81237949962376d0*T + 4.49674359309073d0)
       return
       end
       subroutine Get_CTEoCTE0per(To,Fo,Answer)
@@ -795,10 +795,10 @@ c
       T = (To-Tmin)/(Tmax-Tmin)
       F = (Fo-Fmin)/(Fmax-Fmin)
 
-      Answer = 2.20933750437817d0*F**3 + 2.20370288846218d0*F**2*T -
-     @ 3.22094067037743d0*F**2 + 0.413079582890191d0*F*T**2 -
-     @ 2.06932334688347d0*F*T + 0.324401043293137d0*F -
-     @ 0.0150026898566258d0*T + 0.335393113587849d0
+      Answer = F*(-11.2294477015533d0*F**3 - 0.677256571597844d0*F**2*T
+     @ + 25.7212675918032d0*F**2 + 0.866829645371109d0*F*T**2 +
+     @ 2.02208474621037d0*F*T - 19.3955229608899d0*F -
+     @ 1.82123703042884d0*T + 4.53398659717786d0)
       return
       end
       subroutine Get_CTE0par(To,Answer)
@@ -899,7 +899,7 @@ c
       X = Coords(1)
       Y = Coords(2)
       Z = Coords(3)
-      F = 0.02d0*X + 1.5d0*time
+      F = 2.5d0**(-0.002d0*X)*time
       return
       end
 !*************************************************************************
@@ -916,7 +916,7 @@ c
       X = Coords(1)
       Y = Coords(2)
       Z = Coords(3)
-      T = 0.2d0*Z + 400.0d0
+      T = -1.0d0/10.0d0*X + 700
       return
       end
 !*************************************************************************
@@ -966,21 +966,21 @@ c
 ! Output : Warning Message Printed to the Screen 
       implicit none
       real*8 T,F
-      if (T.lt.300.000000000000d0) then 
-          write(*,*) '*WARNING EXTRAPOLOTION* T BELOW Calibration Data'
-          write(*,*)  'Temperature=', T
-      endif
-      if (T.gt.550.000000000000d0) then 
-          write(*,*) '*WARNING EXTRAPOLOTION* T ABOVE Calibration Data'
-          write(*,*)  'Temperature=', T
-      endif
-      if (F.lt.300.000000000000d0) then 
-          write(*,*) '*WARNING EXTRAPOLOTION* F BELOW Calibration Data'
-	       write(*,*)  'Fluence=', F
-      endif
-      if (F.gt.27.9700000000000d0) then 
-          write(*,*) '*WARNING EXTRAPOLOTION* F ABOVE Calibration Data'
-	       write(*,*)  'Fluence=', F
-      endif
+!      if (T.lt.300.000000000000d0) then 
+!          write(*,*) '*WARNING EXTRAPOLOTION* T BELOW Calibration Data'
+!          write(*,*)  'Temperature=', T
+!      endif
+!      if (T.gt.550.000000000000d0) then 
+!          write(*,*) '*WARNING EXTRAPOLOTION* T ABOVE Calibration Data'
+!          write(*,*)  'Temperature=', T
+!      endif
+!      if (F.lt.300.000000000000d0) then 
+!          write(*,*) '*WARNING EXTRAPOLOTION* F BELOW Calibration Data'
+!	       write(*,*)  'Fluence=', F
+!      endif
+!      if (F.gt.27.9700000000000d0) then 
+!          write(*,*) '*WARNING EXTRAPOLOTION* F ABOVE Calibration Data'
+!	       write(*,*)  'Fluence=', F
+!      endif
       return
       end

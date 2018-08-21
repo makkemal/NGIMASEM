@@ -1,0 +1,839 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{AMSE Section III Div V Section HHA Failiure methodology}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{ASME DIV5 Graphite Probability of Failure
+Code}\label{asme-div5-graphite-probability-of-failure-code}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{csv}
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{k+kn}{import} \PY{n+nn}{tkinter} \PY{k}{as} \PY{n+nn}{tk}
+        \PY{k+kn}{import} \PY{n+nn}{tkinter}\PY{n+nn}{.}\PY{n+nn}{filedialog} \PY{k}{as} \PY{n+nn}{fd}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pylab} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k}{import} \PY{n}{fsolve}
+        
+        \PY{k}{def} \PY{n+nf}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries}\PY{p}{,}\PY{n}{pof}\PY{p}{)}\PY{p}{:}
+            \PY{n}{Sc} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weibull characteristic strength Sc [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Characteristic Strength}
+            \PY{n}{m} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weibull shape factor m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Shape Factor}
+            
+            \PY{n}{func} \PY{o}{=} \PY{k}{lambda} \PY{n}{x} \PY{p}{:} \PY{n}{pof} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{o}{/}\PY{n}{Sc}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{m}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{m}\PY{o}{/}\PY{n}{Sc}\PY{p}{)}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{x}\PY{o}{/}\PY{n}{Sc}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{n}{m}\PY{p}{)}
+            
+            \PY{n}{x\PYZus{}initial\PYZus{}guess} \PY{o}{=} \PY{l+m+mi}{10}
+            \PY{n}{x\PYZus{}solution} \PY{o}{=} \PY{n}{fsolve}\PY{p}{(}\PY{n}{func}\PY{p}{,} \PY{n}{x\PYZus{}initial\PYZus{}guess}\PY{p}{)}
+            
+            \PY{k}{return}\PY{p}{(}\PY{n}{x\PYZus{}solution}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{calculate\PYZus{}principal\PYZus{}stress}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{:}
+            \PY{n}{sigma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{[}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{]}\PY{p}{,}
+                              \PY{p}{[}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{]}\PY{p}{,}
+                              \PY{p}{[}\PY{n}{i}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{,} \PY{n}{i}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} compute principal stresses}
+            \PY{n}{eigvals} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linalg}\PY{o}{.}\PY{n}{eigvalsh}\PY{p}{(}\PY{n}{sigma}\PY{p}{)}\PY{p}{)}
+            \PY{n}{eigvals}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+            \PY{n}{eigvals}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+            \PY{n}{maxshear} \PY{o}{=} \PY{p}{(}\PY{n}{eigvals}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{eigvals}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{l+m+mf}{2.0}
+            \PY{k}{return} \PY{p}{(}\PY{n}{eigvals}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{eigvals}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{eigvals}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{maxshear}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{remove\PYZus{}duplicates}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{:}
+            \PY{n}{output} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{seen} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+            \PY{k}{for} \PY{n}{value} \PY{o+ow}{in} \PY{n}{values}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} If value has not been encountered yet,}
+                \PY{c+c1}{\PYZsh{} ... add it to both list and set.}
+                \PY{k}{if} \PY{n}{value} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{seen}\PY{p}{:}
+                    \PY{n}{output}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{value}\PY{p}{)}
+                    \PY{n}{seen}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{value}\PY{p}{)}
+            \PY{k}{return} \PY{n}{output}
+        
+        \PY{k}{def} \PY{n+nf}{solver\PYZus{}type}\PY{p}{(}\PY{n}{solver}\PY{p}{,} \PY{n}{filename}\PY{p}{,} \PY{n}{entries}\PY{p}{,} \PY{n}{entries2}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{solver} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                \PY{n}{ansys}\PY{p}{(}\PY{n}{filename}\PY{p}{,}\PY{n}{entries}\PY{p}{,}\PY{n}{entries2}\PY{p}{)}
+            \PY{k}{if} \PY{n}{solver} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{:}
+                \PY{n}{calculix}\PY{p}{(}\PY{n}{filename}\PY{p}{,} \PY{n}{entries}\PY{p}{,}\PY{n}{entries2}\PY{p}{)}
+            \PY{k}{return}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{POF Calculation}\label{pof-calculation}
+
+The probability of failure calculation is perfromed using this function,
+and is called for both the Calculix and ANSYS data processing functions.
+Further comments within the code describe the process for calculating
+the POF.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{POF}\PY{p}{(}\PY{n}{entries}\PY{p}{,} \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}Graphite type material properties }
+            \PY{n}{S0} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Threshold value S0 [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1E6} \PY{c+c1}{\PYZsh{}Stress Threshold}
+            \PY{n}{Sc} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weibull characteristic strength Sc [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1E6} \PY{c+c1}{\PYZsh{}Characteristic Strength}
+            \PY{n}{m} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Shape Factor m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Shape Factor}
+            \PY{n}{gs} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Geometry Scale Factor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Geometry scale factor}
+            \PY{n}{K1C} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K1C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}graphite grain size}
+            \PY{n}{alpha} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Grain Scaling Factor Alpha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+            \PY{n}{delta} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Stress Range Threshold Delta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}stress range parameter}
+            \PY{n}{Sigma\PYZus{}m} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean Tensile Stress Sm [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Mean tensile stress Sigma\PYZus{}m}
+                
+            \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{n}{gs}\PY{o}{*}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{c+c1}{\PYZsh{}multiply volume by geometric scale factor}
+            
+            \PY{c+c1}{\PYZsh{}adjust threshold stress}
+            \PY{k}{if} \PY{n+nb}{max}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{o}{\PYZlt{}} \PY{n}{Sc}\PY{p}{:}
+                \PY{n}{S0} \PY{o}{=} \PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n}{Sc}\PY{p}{)}\PY{o}{*}\PY{n}{S0}                      
+            
+            \PY{c+c1}{\PYZsh{}truncate stresses below So}
+            \PY{n}{n} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZgt{}} \PY{n}{S0}\PY{p}{)}\PY{p}{)}
+            
+            \PY{n}{vol\PYZus{}int} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{n}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}integration volume }
+                                               
+            \PY{n}{Xi} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}    
+                \PY{n}{Xi}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{n}{i}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{S0}\PY{p}{)}\PY{o}{/}\PY{p}{(}\PY{n}{Sc} \PY{o}{\PYZhy{}} \PY{n}{S0}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{m}\PY{p}{)} \PY{c+c1}{\PYZsh{}Calculates Xi}
+            
+            \PY{n}{vol} \PY{o}{=} \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}
+            \PY{n}{vol}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{Xi}  \PY{c+c1}{\PYZsh{}Replaces stress column with Xi column }
+            
+            \PY{n}{Vm} \PY{o}{=} \PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{o}{/}\PY{l+m+mi}{2} \PY{o}{*} \PY{p}{(}\PY{n}{K1C}\PY{o}{/}\PY{n}{Sigma\PYZus{}m}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}   \PY{c+c1}{\PYZsh{}Volume threshold for each group}
+            \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{count\PYZus{}init} \PY{o}{=} \PY{n}{count}
+            \PY{n}{sum\PYZus{}V} \PY{o}{=} \PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}  \PY{c+c1}{\PYZsh{}Initialise volume sum as volume of first element}
+            \PY{n}{lvs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{group} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{k}{while} \PY{n}{count} \PY{o}{\PYZlt{}} \PY{n}{n}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{:}
+                \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n}{sum\PYZus{}V} \PY{o}{=} \PY{n}{sum\PYZus{}V} \PY{o}{+} \PY{n}{vol}\PY{p}{[}\PY{n}{count}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{c+c1}{\PYZsh{}add element volumes until volume threshold exceeded}
+                
+                \PY{k}{if} \PY{p}{(}\PY{n}{sum\PYZus{}V} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{Vm}\PY{p}{)}  \PY{o+ow}{or} \PY{p}{(}\PY{n}{count} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{str\PYZus{}range} \PY{o}{=} \PY{n+nb}{abs}\PY{p}{(}\PY{n}{vol}\PY{p}{[}\PY{n}{count}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{}check stress thrshold condition 2}
+                    
+                    \PY{k}{if} \PY{p}{(}\PY{n}{str\PYZus{}range} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{delta}\PY{p}{)} \PY{o+ow}{or} \PY{p}{(}\PY{n}{count} \PY{o}{\PYZgt{}}\PY{o}{=} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+                        \PY{n}{Xi\PYZus{}Vi} \PY{o}{=} \PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{:}\PY{n}{count}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{:}\PY{n}{count}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}
+               
+                        \PY{n}{l} \PY{o}{=} \PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{Xi\PYZus{}Vi}\PY{p}{)}\PY{o}{/}\PY{n}{sum\PYZus{}V}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}calculate probability of survival for each group}
+                        \PY{n}{lvs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+                        \PY{n}{group}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{:}\PY{n}{count}\PY{p}{,}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                        \PY{n}{count\PYZus{}init} \PY{o}{=} \PY{n}{count}
+                        
+                        \PY{k}{if} \PY{n}{count\PYZus{}init} \PY{o}{!=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{vol}\PY{p}{)}\PY{p}{:}
+                            \PY{n}{sum\PYZus{}V} \PY{o}{=} \PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+                        \PY{k}{elif} \PY{n}{count\PYZus{}init} \PY{o}{==} \PY{n+nb}{len}\PY{p}{(}\PY{n}{vol}\PY{p}{)}\PY{p}{:}
+                            \PY{n}{sum\PYZus{}V} \PY{o}{=} \PY{n}{vol}\PY{p}{[}\PY{n}{count\PYZus{}init}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}
+                        
+            \PY{n}{prob\PYZus{}survival} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{prod}\PY{p}{(}\PY{n}{lvs}\PY{p}{)}
+            
+            \PY{n}{prob\PYZus{}fail} \PY{o}{=} \PY{l+m+mi}{1} \PY{o}{\PYZhy{}} \PY{n}{prob\PYZus{}survival}
+            \PY{k}{return}\PY{p}{(}\PY{n}{prob\PYZus{}fail}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{CALCULIX Output File Data
+Management}\label{calculix-output-file-data-management}
+
+This function opens the Calculix output file (.dat file) and processes
+the principal stresses and element volumes into arrays. The MDE stress
+is then calculated, and the POF function is called from above to
+calculate the probability of failure. The MDE stress and POF is then
+plotted.
+
+\subsubsection{Note:}\label{note}
+
+Make sure Calculix input file contains
+
+\begin{verbatim}
+ *EL PRINT, ELSET=my_volumes
+ EVOL
+\end{verbatim}
+
+to print element volumes to Calculix output file (.dat)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{calculix}\PY{p}{(}\PY{n}{filename}\PY{p}{,} \PY{n}{entries}\PY{p}{,}\PY{n}{entries2}\PY{p}{)}\PY{p}{:} 
+            
+            \PY{n}{compratio} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Compression to tension conversion ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Ratio for compressive to tensile average strength }
+            \PY{n}{nu} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Poisson ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}poisons ratio }
+            \PY{n}{l\PYZus{}f} \PY{o}{=} \PY{l+m+mi}{1}
+            
+            \PY{n}{MDEstress} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            \PY{n}{Volume} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+            
+            \PY{n}{dat\PYZus{}input}\PY{o}{=} \PY{n}{filename} 
+            \PY{n}{dat\PYZus{}file} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{dat\PYZus{}input}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{stressfound}\PY{o}{=}\PY{k+kc}{False}
+            \PY{n}{volfound}\PY{o}{=}\PY{k+kc}{False}
+            \PY{n}{disp}\PY{o}{=}\PY{k+kc}{False}
+            \PY{k}{global} \PY{n}{time}\PY{p}{,}\PY{n}{max\PYZus{}mde}\PY{p}{,}\PY{n}{pof}  
+            \PY{n}{time} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{max\PYZus{}mde} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{pof} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{c+c1}{\PYZsh{} Reads Output .dat file line by line and extracts necessary stresses and volumes}
+            \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{dat\PYZus{}file}\PY{p}{:} 
+                \PY{k}{if} \PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{14}\PY{p}{]}\PY{o}{==}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{displacements}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                    \PY{n}{time}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{49}\PY{p}{:}\PY{l+m+mi}{62}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                    \PY{n}{disp}\PY{o}{=}\PY{k+kc}{True}
+                    \PY{n}{stressfound}\PY{o}{=}\PY{k+kc}{False}
+                    \PY{n}{volfound}\PY{o}{=}\PY{k+kc}{False}
+                \PY{k}{if} \PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{]}\PY{o}{==}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{stresses}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                    \PY{n}{stressfound}\PY{o}{=}\PY{k+kc}{True}
+                    \PY{n}{volfound}\PY{o}{=}\PY{k+kc}{False}
+                    \PY{n}{disp}\PY{o}{=}\PY{k+kc}{False}
+                \PY{k}{if} \PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{7}\PY{p}{]}\PY{o}{==}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{volume}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                    \PY{n}{volfound}\PY{o}{=}\PY{k+kc}{True}
+                    \PY{n}{stressfound}\PY{o}{=}\PY{k+kc}{False} 
+                    \PY{n}{disp}\PY{o}{=}\PY{k+kc}{False}
+                    
+                \PY{k}{if} \PY{n}{stressfound} \PY{o+ow}{and} \PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{o+ow}{and} \PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{9}\PY{p}{]} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{stresses}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{p}{:}
+                    \PY{n}{elem} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+                        
+                    \PY{k}{if} \PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{elem}\PY{p}{)}\PY{p}{)} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{MDEstress}\PY{p}{:}
+                        \PY{n}{MDEstress}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{elem}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 
+                    \PY{n}{intpoint} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{13}\PY{p}{:}\PY{l+m+mi}{14}\PY{p}{]}\PY{p}{)}
+                    \PY{n}{stress\PYZus{}x} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{15}\PY{p}{:}\PY{l+m+mi}{28}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1e6}
+                    \PY{n}{stress\PYZus{}y} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{29}\PY{p}{:}\PY{l+m+mi}{42}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1e6}
+                    \PY{n}{stress\PYZus{}z} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{43}\PY{p}{:}\PY{l+m+mi}{56}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1e6}
+                    \PY{n}{stress\PYZus{}xy} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{57}\PY{p}{:}\PY{l+m+mi}{70}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1e6}
+                    \PY{n}{stress\PYZus{}yz} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{71}\PY{p}{:}\PY{l+m+mi}{84}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1e6}
+                    \PY{n}{stress\PYZus{}xz} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{85}\PY{p}{:}\PY{l+m+mi}{98}\PY{p}{]}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{1e6}
+                    \PY{n}{stressvalues}\PY{o}{=}\PY{p}{(}\PY{n}{stress\PYZus{}x}\PY{p}{,}\PY{n}{stress\PYZus{}y}\PY{p}{,}\PY{n}{stress\PYZus{}z}\PY{p}{,}\PY{n}{stress\PYZus{}xy}\PY{p}{,}\PY{n}{stress\PYZus{}yz}\PY{p}{,}\PY{n}{stress\PYZus{}xz}\PY{p}{)}
+                    \PY{n}{Prin1}\PY{p}{,} \PY{n}{Prin2}\PY{p}{,} \PY{n}{Prin3}\PY{p}{,} \PY{n}{shear} \PY{o}{=} \PY{n}{calculate\PYZus{}principal\PYZus{}stress}\PY{p}{(}\PY{n}{stressvalues}\PY{p}{)}
+                    \PY{n}{P1}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{Prin1}\PY{p}{)}
+                    \PY{n}{P2}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{Prin2}\PY{p}{)}
+                    \PY{n}{P3}\PY{o}{=}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{Prin3}\PY{p}{)}
+                    \PY{n}{np}\PY{o}{.}\PY{n}{putmask}\PY{p}{(}\PY{n}{P1}\PY{p}{,} \PY{n}{P1}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{P1}\PY{p}{)}\PY{o}{*}\PY{n}{compratio}\PY{p}{)}
+                    \PY{n}{np}\PY{o}{.}\PY{n}{putmask}\PY{p}{(}\PY{n}{P2}\PY{p}{,} \PY{n}{P2}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{P2}\PY{p}{)}\PY{o}{*}\PY{n}{compratio}\PY{p}{)}
+                    \PY{n}{np}\PY{o}{.}\PY{n}{putmask}\PY{p}{(}\PY{n}{P3}\PY{p}{,} \PY{n}{P3}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{P3}\PY{p}{)}\PY{o}{*}\PY{n}{compratio}\PY{p}{)}
+                    \PY{n}{MDEstress}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{elem}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l\PYZus{}f}\PY{o}{*}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{P1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{P2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{P3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{nu}\PY{o}{*}\PY{p}{(}\PY{n}{P1}\PY{o}{*}\PY{n}{P2}\PY{o}{+}\PY{n}{P1}\PY{o}{*}\PY{n}{P3}\PY{o}{+}\PY{n}{P2}\PY{o}{*}\PY{n}{P3}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{tolist}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Calculate MDE stres DIV 5 and append to MDE stress dictionary   }
+                 
+                \PY{k}{if} \PY{n}{volfound} \PY{o+ow}{and} \PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{o+ow}{and} \PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{7}\PY{p}{]} \PY{o}{!=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{volume}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{p}{:} 
+                     \PY{k}{if} \PY{n}{line}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lacem}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+                         \PY{k}{break}
+                     \PY{n}{elem} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{)}
+                     
+                     \PY{k}{if} \PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{elem}\PY{p}{)}\PY{p}{)} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{Volume}\PY{p}{:}
+                        \PY{n}{Volume}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{elem}\PY{p}{)}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                     
+                     \PY{n}{volume} \PY{o}{=} \PY{n+nb}{float}\PY{p}{(}\PY{n}{line}\PY{p}{[}\PY{l+m+mi}{12}\PY{p}{:}\PY{l+m+mi}{26}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1e\PYZhy{}9}
+                     \PY{n}{Volume}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{elem}\PY{p}{)}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{volume}\PY{p}{)} \PY{c+c1}{\PYZsh{}Extracts element volumes and appends to Volume dictionary }
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{time}\PY{p}{)}\PY{p}{)}\PY{p}{:}  
+                \PY{n}{MDEstresselem\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{Volume\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{temp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                
+                \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n+nb}{dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{n}{MDEstress}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} Averages stress from each integration pointover element and writes to array for computations}
+                    \PY{k}{if} \PY{n}{intpoint} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                        \PY{n}{temp} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{,} \PY{n}{value}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+                    \PY{k}{else}\PY{p}{:}
+                        \PY{n}{temp} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{p}{(}\PY{n}{value}\PY{p}{[}\PY{n}{intpoint}\PY{o}{*}\PY{n}{i} \PY{p}{:} \PY{n}{intpoint}\PY{o}{*}\PY{n}{i}\PY{o}{+}\PY{p}{(}\PY{n}{intpoint}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{p}{]}
+                    \PY{n}{MDEstresselem\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{temp}\PY{p}{)}
+                 
+                \PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n+nb}{dict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{n}{Volume}\PY{p}{)}\PY{p}{:} \PY{c+c1}{\PYZsh{} Writes element volumes to array for computations}
+                    \PY{n}{temp} \PY{o}{=} \PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{key}\PY{p}{)}\PY{p}{,} \PY{n}{value}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+                    \PY{n}{Volume\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{temp}\PY{p}{)}       
+        
+                \PY{n}{MDEstresselem\PYZus{}list} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{MDEstresselem\PYZus{}list}\PY{p}{,} \PY{n}{key} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Sorts MDE stress array according to element }
+                \PY{n}{Volume\PYZus{}list} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{Volume\PYZus{}list}\PY{p}{,} \PY{n}{key} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Sorts Volume array according to element }
+                
+                \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{hstack}\PY{p}{(}\PY{p}{(}\PY{n}{MDEstresselem\PYZus{}list}\PY{p}{,}\PY{n}{Volume\PYZus{}list}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}combines MDE stress and volume arrays into one array}
+                \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{delete}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+                \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{,} \PY{n}{key} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{reverse} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Orders combined array based on stress}
+            
+                \PY{n}{max\PYZus{}mde}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1e6}\PY{p}{)}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Max MDE [MPa] = }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}mde}\PY{p}{)}
+                
+                \PY{n}{prob\PYZus{}fail} \PY{o}{=} \PY{n}{POF}\PY{p}{(}\PY{n}{entries}\PY{p}{,} \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{)} \PY{c+c1}{\PYZsh{} Calculates POF at each timestep}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Probability of Failure = }\PY{l+s+si}{\PYZpc{}.10E}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{prob\PYZus{}fail}\PY{p}{)}
+                
+                \PY{n}{pof}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{prob\PYZus{}fail}\PY{p}{)}
+                
+            \PY{n}{sa\PYZus{}val} \PY{o}{=} \PY{p}{[}\PY{n}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries2}\PY{p}{,}\PY{l+m+mf}{1E\PYZhy{}4}\PY{p}{)}\PY{p}{,}\PY{n}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries2}\PY{p}{,}\PY{l+m+mf}{1E\PYZhy{}3}\PY{p}{)}\PY{p}{,}\PY{n}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries2}\PY{p}{,}\PY{l+m+mf}{1E\PYZhy{}2}\PY{p}{)}\PY{p}{]}
+            
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MDE Stress for POF of 1E\PYZhy{}4, 1E\PYZhy{}3 and 1E\PYZhy{}2:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sa\PYZus{}val}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Plotting of figures    }
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{dpi} \PY{o}{=} \PY{l+m+mi}{250}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{sa\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POF 1E\PYZhy{}4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{sa\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POF 1E\PYZhy{}3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{sa\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POF 1E\PYZhy{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Maximum MDE Stress vs. Analysis Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{max\PYZus{}mde}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{max\PYZus{}mde}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time [days]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Maximum MDE Stress [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{dpi} \PY{o}{=} \PY{l+m+mi}{250}\PY{p}{)}
+            \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Probability of Failure vs. Analysis Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{pof}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{pof}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}4}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{1E\PYZhy{}7}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time [days]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Probability of Failure}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}  
+            
+            \PY{k}{return}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{ANSYS Output File Data
+Management}\label{ansys-output-file-data-management}
+
+This function opens the ANSYS output file (.csv file) and processes the
+principal stresses and element volumes into arrays. The MDE stress is
+then calculated, and the POF function is called from above to calculate
+the probability of failure. The MDE stress and POF is then plotted.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{def} \PY{n+nf}{ansys}\PY{p}{(}\PY{n}{filename}\PY{p}{,}\PY{n}{entries}\PY{p}{,}\PY{n}{entries2}\PY{p}{)}\PY{p}{:}
+            \PY{n}{input\PYZus{}data} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{genfromtxt}\PY{p}{(}\PY{n}{filename}\PY{p}{,} \PY{n}{delimiter}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+            \PY{n}{compratio} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Compression to tension conversion ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Ration for compressive to tensile average strength }
+            \PY{n}{nu} \PY{o}{=} \PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{n}{entries}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Poisson ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}poisons ratio }
+            \PY{n}{l\PYZus{}f} \PY{o}{=} \PY{l+m+mi}{1}
+            \PY{k}{global} \PY{n}{time}\PY{p}{,}\PY{n}{max\PYZus{}mde}\PY{p}{,}\PY{n}{pof}  
+            \PY{n}{time} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{max\PYZus{}mde} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{pof} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            
+            \PY{n}{P1}\PY{p}{,} \PY{n}{P2}\PY{p}{,} \PY{n}{P3} \PY{o}{=} \PY{n}{input\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{input\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{n}{input\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]} \PY{c+c1}{\PYZsh{}extract principal stresses from input file}
+         
+            \PY{n}{np}\PY{o}{.}\PY{n}{putmask}\PY{p}{(}\PY{n}{P1}\PY{p}{,} \PY{n}{P1}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{P1}\PY{p}{)}\PY{o}{*}\PY{n}{compratio}\PY{p}{)} \PY{c+c1}{\PYZsh{}Convert compressive to tensile stress}
+            \PY{n}{np}\PY{o}{.}\PY{n}{putmask}\PY{p}{(}\PY{n}{P2}\PY{p}{,} \PY{n}{P2}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{P2}\PY{p}{)}\PY{o}{*}\PY{n}{compratio}\PY{p}{)}
+            \PY{n}{np}\PY{o}{.}\PY{n}{putmask}\PY{p}{(}\PY{n}{P3}\PY{p}{,} \PY{n}{P3}\PY{o}{\PYZlt{}}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{absolute}\PY{p}{(}\PY{n}{P3}\PY{p}{)}\PY{o}{*}\PY{n}{compratio}\PY{p}{)}
+            \PY{n}{MDEstress} \PY{o}{=} \PY{n}{l\PYZus{}f}\PY{o}{*}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{P1}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{P2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{+}\PY{n}{P3}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{nu}\PY{o}{*}\PY{p}{(}\PY{n}{P1}\PY{o}{*}\PY{n}{P2}\PY{o}{+}\PY{n}{P1}\PY{o}{*}\PY{n}{P3}\PY{o}{+}\PY{n}{P2}\PY{o}{*}\PY{n}{P3}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Calculate MDE stress DIV 5 }
+            \PY{n}{time} \PY{o}{=} \PY{n}{remove\PYZus{}duplicates}\PY{p}{(}\PY{n}{input\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+            \PY{n}{time\PYZus{}stress\PYZus{}vol\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{input\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{MDEstress}\PY{p}{,}\PY{n}{input\PYZus{}data}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{T} \PY{c+c1}{\PYZsh{}Create time step list}
+            
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{time}\PY{p}{:} \PY{c+c1}{\PYZsh{}for each time in time step list}
+                \PY{n}{vol} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{n}{stress} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{time\PYZus{}stress\PYZus{}vol\PYZus{}array}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{if} \PY{n}{time\PYZus{}stress\PYZus{}vol\PYZus{}array}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{n}{i}\PY{p}{:}
+                        \PY{n}{stress}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{time\PYZus{}stress\PYZus{}vol\PYZus{}array}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                        \PY{n}{vol}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{time\PYZus{}stress\PYZus{}vol\PYZus{}array}\PY{p}{[}\PY{n}{j}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+            
+                \PY{n}{elem\PYZus{}no} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{stress}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+                \PY{n}{elem\PYZus{}no} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{elem\PYZus{}no}\PY{p}{)}
+                \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{vstack}\PY{p}{(}\PY{p}{(}\PY{n}{elem\PYZus{}no}\PY{p}{,}\PY{n}{stress}\PY{p}{,}\PY{n}{vol}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}creates matrix of element number, MDE stress and element volume }
+                \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array} \PY{o}{=} \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{o}{.}\PY{n}{T}
+        
+                \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n+nb}{sorted}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{,} \PY{n}{key} \PY{o}{=} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{reverse} \PY{o}{=} \PY{k+kc}{True}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{}Order elements in terms of stress from max to min}
+        
+                \PY{n}{max\PYZus{}mde}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{o}{/}\PY{l+m+mf}{1e6}\PY{p}{)} \PY{c+c1}{\PYZsh{}create list of max MDe stress per timestep for plotting}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Max MDE [MPa] = }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{max\PYZus{}mde}\PY{p}{)}
+                
+                \PY{n}{prob\PYZus{}fail} \PY{o}{=} \PY{n}{POF}\PY{p}{(}\PY{n}{entries}\PY{p}{,} \PY{n}{stress\PYZus{}vol\PYZus{}group\PYZus{}array}\PY{p}{)} \PY{c+c1}{\PYZsh{}solve probability of failure for time step}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Probability of Failure = }\PY{l+s+si}{\PYZpc{}.10E}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{prob\PYZus{}fail}\PY{p}{)}
+                
+                \PY{n}{pof}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{prob\PYZus{}fail}\PY{p}{)}
+                
+            \PY{n}{sa\PYZus{}val} \PY{o}{=} \PY{p}{[}\PY{n}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries2}\PY{p}{,}\PY{l+m+mf}{1E\PYZhy{}4}\PY{p}{)}\PY{p}{,}\PY{n}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries2}\PY{p}{,}\PY{l+m+mf}{1E\PYZhy{}3}\PY{p}{)}\PY{p}{,}\PY{n}{simple\PYZus{}assess}\PY{p}{(}\PY{n}{entries2}\PY{p}{,}\PY{l+m+mf}{1E\PYZhy{}2}\PY{p}{)}\PY{p}{]}
+            
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MDE Stress for POF of 1E\PYZhy{}4, 1E\PYZhy{}3 and 1E\PYZhy{}2:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{sa\PYZus{}val}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Plotting of figures}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{dpi} \PY{o}{=} \PY{l+m+mi}{250}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{sa\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POF 1E\PYZhy{}4}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{sa\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POF 1E\PYZhy{}3}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{n}{sa\PYZus{}val}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{POF 1E\PYZhy{}2}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Maximum MDE Stress vs. Analysis Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{max\PYZus{}mde}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{max\PYZus{}mde}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time [days]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Maximum MDE Stress [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{7}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{,} \PY{n}{dpi} \PY{o}{=} \PY{l+m+mi}{250}\PY{p}{)}
+            \PY{n}{ax} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{gca}\PY{p}{(}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Probability of Failure vs. Analysis Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{pof}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{pof}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}4}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}3}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}\PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1E\PYZhy{}2}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{k}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}yscale}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{ax}\PY{o}{.}\PY{n}{set\PYZus{}ylim}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{1E\PYZhy{}7}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time [days]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Probability of Failure}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}  
+        
+            \PY{k}{return}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{GUI Interface}\label{gui-interface}
+
+The Tkinter GUI that opens when the code is run. Fields for the GUI are
+defined here. POF calculation calls inputs from GUI to be used in
+calculations.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{}Graphite type material property fields for GUI}
+        \PY{n}{fields} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Compression to tension conversion ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Poisson ratio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Threshold value S0 [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+                  \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weibull characteristic strength Sc [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Shape Factor m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Geometry Scale Factor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+                  \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{K1C}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Grain Scaling Factor Alpha}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Stress Range Threshold Delta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Mean Tensile Stress Sm [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{fields2} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weibull characteristic strength Sc [MPa]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weibull shape factor m}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}  create variable input deck for standard POF  }
+        \PY{k}{def} \PY{n+nf}{makeform}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{fields}\PY{p}{)}\PY{p}{:}
+           \PY{n}{entries} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+           \PY{n}{default} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.264}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.15}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{8.25}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{21.56}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{5.78}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0.07}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{25}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{}Default values for GUI fields}
+           \PY{k}{for} \PY{n}{field} \PY{o+ow}{in} \PY{n}{fields}\PY{p}{:}
+              \PY{n}{row} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Frame}\PY{p}{(}\PY{n}{root}\PY{p}{)}
+              \PY{n}{lab} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{n}{field}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{anchor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{ent} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Entry}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+              \PY{n}{ent}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{default}\PY{p}{[}\PY{n}{fields}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{field}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+              \PY{n}{row}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{TOP}\PY{p}{,} \PY{n}{fill}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+              \PY{n}{lab}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{LEFT}\PY{p}{)}
+              \PY{n}{ent}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{RIGHT}\PY{p}{,} \PY{n}{expand}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{YES}\PY{p}{,} \PY{n}{fill} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{X}\PY{p}{)}
+              \PY{n}{entries}\PY{p}{[}\PY{n}{field}\PY{p}{]} \PY{o}{=} \PY{n}{ent}        
+           \PY{k}{return} \PY{n}{entries}
+        
+        \PY{c+c1}{\PYZsh{}  create variable input deck for less conservative POF }
+        \PY{k}{def} \PY{n+nf}{makeform2}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{fields}\PY{p}{)}\PY{p}{:}
+           \PY{n}{entries} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+           \PY{n}{default} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{20.49}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{9.26}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+           \PY{k}{for} \PY{n}{field} \PY{o+ow}{in} \PY{n}{fields}\PY{p}{:}
+              \PY{n}{row} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Frame}\PY{p}{(}\PY{n}{root}\PY{p}{)}
+              \PY{n}{lab} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{row}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{50}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{n}{field}\PY{o}{+}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{anchor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+              \PY{n}{ent} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Entry}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+              \PY{n}{ent}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{n}{default}\PY{p}{[}\PY{n}{fields}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{field}\PY{p}{)}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+              \PY{n}{row}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{TOP}\PY{p}{,} \PY{n}{fill}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{X}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+              \PY{n}{lab}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{LEFT}\PY{p}{)}
+              \PY{n}{ent}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{RIGHT}\PY{p}{,} \PY{n}{expand}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{YES}\PY{p}{,} \PY{n}{fill} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{X}\PY{p}{)}
+              \PY{n}{entries}\PY{p}{[}\PY{n}{field}\PY{p}{]} \PY{o}{=} \PY{n}{ent}        
+           \PY{k}{return} \PY{n}{entries}
+        
+        \PY{k}{def} \PY{n+nf}{callback}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{k}{global} \PY{n}{name}
+            \PY{n}{name} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{fd}\PY{o}{.}\PY{n}{askopenfilename}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{n}{selection} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Selcted file = }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{name}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{selection}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+            \PY{n}{label1}\PY{o}{.}\PY{n}{config}\PY{p}{(}\PY{n}{text} \PY{o}{=} \PY{n}{selection}\PY{p}{)}
+            \PY{k}{return}\PY{p}{(}\PY{n}{name}\PY{p}{)}
+        
+        \PY{k}{if} \PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}\PYZus{}main\PYZus{}\PYZus{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+           \PY{n}{root} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Tk}\PY{p}{(}\PY{p}{)}
+           \PY{n}{root}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ASME Section III Division 5 Graphite Life Assessment Tool}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+           \PY{n}{root}\PY{o}{.}\PY{n}{geometry}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{1200x700}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+           \PY{n}{intro} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Please ensure all input data is in SI units}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+           \PY{n}{intro}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+           
+           \PY{n}{b1} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Button}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{File Open}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{command}\PY{o}{=}\PY{n}{callback}\PY{p}{)}
+           \PY{n}{b1}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{TOP}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+           
+           \PY{n}{label1} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{root}\PY{p}{)}
+           \PY{n}{label1}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{TOP}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{} Radiobutton for ansys or calculix solver}
+           \PY{n}{v} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{IntVar}\PY{p}{(}\PY{p}{)}
+           \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{root}\PY{p}{,}\PY{n}{text}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}\PYZdq{}\PYZdq{}}\PY{l+s+s2}{Choose a Solver:}\PY{l+s+s2}{\PYZdq{}\PYZdq{}\PYZdq{}}\PY{p}{,} \PY{n}{justify} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{LEFT}\PY{p}{,}\PY{n}{padx} \PY{o}{=} \PY{l+m+mi}{20}\PY{p}{)}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{p}{)}
+           \PY{n}{tk}\PY{o}{.}\PY{n}{Radiobutton}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ANSYS}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{padx} \PY{o}{=} \PY{l+m+mi}{20}\PY{p}{,} \PY{n}{variable}\PY{o}{=}\PY{n}{v}\PY{p}{,} \PY{n}{value}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{anchor} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{W}\PY{p}{)}
+           \PY{n}{tk}\PY{o}{.}\PY{n}{Radiobutton}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Calculix}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{padx} \PY{o}{=} \PY{l+m+mi}{20}\PY{p}{,} \PY{n}{variable}\PY{o}{=}\PY{n}{v}\PY{p}{,} \PY{n}{value}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{anchor} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{W}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{}Description}
+           \PY{n}{descript} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Simplified Assessment}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+           \PY{n}{descript}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{} bininding simplified assessment input deck to root window}
+           \PY{n}{ents2} \PY{o}{=} \PY{n}{makeform2}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{fields2}\PY{p}{)}
+           \PY{n}{root}\PY{o}{.}\PY{n}{bind}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{}KeyRelease\PYZhy{}Return\PYZgt{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{(}\PY{k}{lambda} \PY{n}{event}\PY{p}{,} \PY{n}{e}\PY{o}{=}\PY{n}{ents2}\PY{p}{:} \PY{n}{tk}\PY{o}{.}\PY{n}{fetch}\PY{p}{(}\PY{n}{e}\PY{p}{)}\PY{p}{)}\PY{p}{)} 
+           
+           \PY{c+c1}{\PYZsh{}Description}
+           \PY{n}{descript1} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Full Assessment}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+           \PY{n}{descript1}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{} bininding full assessment input deck to root window}
+           \PY{n}{ents} \PY{o}{=} \PY{n}{makeform}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{fields}\PY{p}{)}
+           \PY{n}{root}\PY{o}{.}\PY{n}{bind}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZlt{}KeyRelease\PYZhy{}Return\PYZgt{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{(}\PY{k}{lambda} \PY{n}{event}\PY{p}{,} \PY{n}{e}\PY{o}{=}\PY{n}{ents}\PY{p}{:} \PY{n}{tk}\PY{o}{.}\PY{n}{fetch}\PY{p}{(}\PY{n}{e}\PY{p}{)}\PY{p}{)}\PY{p}{)} 
+           
+           \PY{c+c1}{\PYZsh{} Buttons for solve POF, File Open or Quit}
+           \PY{n}{b2} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Button}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Probability of Failure}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{command}\PY{o}{=}\PY{p}{(}\PY{k}{lambda} \PY{n}{e}\PY{o}{=}\PY{n}{ents}\PY{p}{,}\PY{n}{e2}\PY{o}{=}\PY{n}{ents2}\PY{p}{:} \PY{n}{solver\PYZus{}type}\PY{p}{(}\PY{n}{v}\PY{o}{.}\PY{n}{get}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{name}\PY{p}{,}\PY{n}{e}\PY{p}{,}\PY{n}{e2}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+           \PY{n}{b2}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{LEFT}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+           \PY{n}{b3} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Button}\PY{p}{(}\PY{n}{root}\PY{p}{,} \PY{n}{text}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Quit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{command}\PY{o}{=}\PY{n}{root}\PY{o}{.}\PY{n}{quit}\PY{p}{)}
+           \PY{n}{b3}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{LEFT}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+           
+           \PY{c+c1}{\PYZsh{} Printing POF value in textbox}
+        
+           \PY{n}{label} \PY{o}{=} \PY{n}{tk}\PY{o}{.}\PY{n}{Label}\PY{p}{(}\PY{n}{root}\PY{p}{)}
+           \PY{n}{label}\PY{o}{.}\PY{n}{pack}\PY{p}{(}\PY{n}{side}\PY{o}{=}\PY{n}{tk}\PY{o}{.}\PY{n}{LEFT}\PY{p}{,} \PY{n}{padx}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{pady}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{)}
+           
+           \PY{n}{root}\PY{o}{.}\PY{n}{mainloop}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Selcted file = /home/makke/Documents/Block1\_model/block\_life.dat
+
+Max MDE [MPa] =  [1.6426861370264314e-11]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09, 1.7823878061626393e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09, 1.7823878061626393e-09, 1.823069218717935e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09, 1.7823878061626393e-09, 1.823069218717935e-09, 1.8628236079604883e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09, 1.7823878061626393e-09, 1.823069218717935e-09, 1.8628236079604883e-09, 1.901497961374219e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09, 1.7823878061626393e-09, 1.823069218717935e-09, 1.8628236079604883e-09, 1.901497961374219e-09, 1.9390564223815505e-09]
+Probability of Failure = 0.0000000000E+00
+Max MDE [MPa] =  [1.6426861370264314e-11, 3.9418442935256526e-11, 7.891425614243246e-10, 8.316145638553101e-10, 8.75153320083158e-10, 9.195284234152585e-10, 9.648236719964325e-10, 1.0105846708598395e-09, 1.056706415769435e-09, 1.10314033415307e-09, 1.1497849213630414e-09, 1.1965615753458774e-09, 1.2434076196371075e-09, 1.2902331568209466e-09, 1.3369958625659366e-09, 1.3835574679190928e-09, 1.4298902122216514e-09, 1.4758882016694004e-09, 1.5214885829571163e-09, 1.566602760627465e-09, 1.6111638151091839e-09, 1.6551011058840593e-09, 1.6983242690488604e-09, 1.7407774047104125e-09, 1.7823878061626393e-09, 1.823069218717935e-09, 1.8628236079604883e-09, 1.901497961374219e-09, 1.9390564223815505e-09, 1.975514521529236e-09]
+Probability of Failure = 0.0000000000E+00
+MDE Stress for POF of 1E-4, 1E-3 and 1E-2: [7.39679963993554, 9.775986575343937, 12.939443253968507]
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
